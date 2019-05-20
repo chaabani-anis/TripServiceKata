@@ -26,7 +26,7 @@ namespace TripServiceKata.Tests
             LoggedInUser = null;
             
             //Act
-            _tripService.GetTripsByUser(LoggedInUser);
+            _tripService.GetTripsByUser(LoggedInUser, LoggedInUser);
 
             //Assert exception
         }
@@ -40,7 +40,7 @@ namespace TripServiceKata.Tests
             friend.AddFriend(new User.User());
 
             //Act
-            List<Trip.Trip> trips = _tripService.GetTripsByUser(friend);
+            List<Trip.Trip> trips = _tripService.GetTripsByUser(friend, LoggedInUser);
 
             //Assert
             Assert.IsTrue((trips.Count == 0));
@@ -55,7 +55,7 @@ namespace TripServiceKata.Tests
             friend.AddFriend(LoggedInUser);
 
             //Act
-            List<Trip.Trip> trips = _tripService.GetTripsByUser(friend);
+            List<Trip.Trip> trips = _tripService.GetTripsByUser(friend, LoggedInUser);
 
             //Assert
             Assert.IsTrue((trips.Count == 1));
@@ -63,10 +63,6 @@ namespace TripServiceKata.Tests
 
         public class TestableTripService : TripService
         {
-            public override User.User GetLoggedUser()
-            {
-                return LoggedInUser;
-            }
 
             public override List<Trip.Trip> TripsByUser(User.User user)
             {

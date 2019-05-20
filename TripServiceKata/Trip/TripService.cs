@@ -6,10 +6,10 @@ namespace TripServiceKata.Trip
 {
     public class TripService
     {
-        public List<Trip> GetTripsByUser(User.User user)
+        public List<Trip> GetTripsByUser(User.User user, User.User loggedUser)
         {
             List<Trip> tripList = new List<Trip>();
-            User.User loggedUser = GetLoggedUser();
+            
             bool isFriend = false;
             if (loggedUser != null)
             {
@@ -39,11 +39,6 @@ namespace TripServiceKata.Trip
             tripList = TripDAO.FindTripsByUser(user);
             return tripList;
         }
-
-        public virtual User.User GetLoggedUser()
-        {
-            User.User loggedUser = UserSession.GetInstance().GetLoggedUser();
-            return loggedUser;
-        }
+        
     }
 }
