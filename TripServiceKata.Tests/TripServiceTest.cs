@@ -8,7 +8,15 @@ namespace TripServiceKata.Tests
     [TestClass]
     public class TripServiceTest
     {
-        public static User.User LoggedInUser = new User.User();
+        public static User.User LoggedInUser;
+        private TripService _tripService;
+
+        [TestInitialize]
+        public void SetUp()
+        {
+            _tripService = new TestableTripService();
+            LoggedInUser = new User.User();
+        }
 
         [TestMethod]
         [ExpectedException(typeof(UserNotLoggedInException))]
@@ -16,10 +24,9 @@ namespace TripServiceKata.Tests
         {
             //Arrange
             LoggedInUser = null;
-            TripService tripService = new TestableTripService();
-
+            
             //Act
-            tripService.GetTripsByUser(LoggedInUser);
+            _tripService.GetTripsByUser(LoggedInUser);
 
             //Assert exception
         }
@@ -32,11 +39,8 @@ namespace TripServiceKata.Tests
             friend.AddTrip(new Trip.Trip());
             friend.AddFriend(new User.User());
 
-            LoggedInUser = new User.User();
-            TripService tripService = new TestableTripService();
-
             //Act
-            List<Trip.Trip> trips = tripService.GetTripsByUser(friend);
+            List<Trip.Trip> trips = _tripService.GetTripsByUser(friend);
 
             //Assert
             Assert.IsTrue((trips.Count == 0));
@@ -50,10 +54,8 @@ namespace TripServiceKata.Tests
             friend.AddTrip(new Trip.Trip());
             friend.AddFriend(LoggedInUser);
 
-            TripService tripService = new TestableTripService();
-
             //Act
-            List<Trip.Trip> trips = tripService.GetTripsByUser(friend);
+            List<Trip.Trip> trips = _tripService.GetTripsByUser(friend);
 
             //Assert
             Assert.IsTrue((trips.Count == 1));
