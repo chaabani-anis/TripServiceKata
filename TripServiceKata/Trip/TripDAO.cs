@@ -5,6 +5,11 @@ namespace TripServiceKata.Trip
 {
     public class TripDAO
     {
+        public List<Trip> TripsOf(User.User user)
+        {
+            return TripDAO.FindTripsByUser(user);
+        }
+
         public static List<Trip> FindTripsByUser(User.User user)
         {
             throw new DependendClassCallDuringUnitTestException(
